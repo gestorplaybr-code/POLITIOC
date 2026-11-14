@@ -1,0 +1,2 @@
+ALTER TABLE public.whatsapp_campanhas ADD COLUMN IF NOT EXISTS enquete_id UUID REFERENCES public.enquetes(id) ON DELETE SET NULL;
+CREATE INDEX IF NOT EXISTS idx_whatsapp_campanhas_enquete ON public.whatsapp_campanhas(enquete_id);

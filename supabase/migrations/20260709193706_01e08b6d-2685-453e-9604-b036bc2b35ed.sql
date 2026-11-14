@@ -1,0 +1,1 @@
+DELETE FROM public.eleitores WHERE id='421f056e-0e9e-40ab-b7d5-f177c1458380';

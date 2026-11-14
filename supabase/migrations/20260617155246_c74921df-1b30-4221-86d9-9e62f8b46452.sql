@@ -1,0 +1,1 @@
+ALTER TABLE public.enquetes ADD COLUMN IF NOT EXISTS mostrar_politico boolean NOT NULL DEFAULT false;

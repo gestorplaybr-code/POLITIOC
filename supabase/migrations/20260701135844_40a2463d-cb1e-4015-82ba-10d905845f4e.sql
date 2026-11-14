@@ -1,0 +1,1 @@
+ALTER TABLE public.enquetes ADD COLUMN IF NOT EXISTS numero_whatsapp_bot text;

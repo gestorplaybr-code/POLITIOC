@@ -1,0 +1,797 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system definition.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utility
+ * classes (e.g. --color-primary -> bg-primary, text-primary).
+ *
+ * The :root and .dark blocks define the actual color values using oklch.
+ * All colors MUST use oklch format.
+ *
+ * To add a new semantic color:
+ * 1. Add the variable to :root (light value) and .dark (dark value)
+ * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --font-display: "Bebas Neue", "Barlow", system-ui, sans-serif;
+  --font-body: "Barlow", system-ui, sans-serif;
+  --color-midnight-bg: #05050f;
+  --color-midnight-surface: #0a0a1a;
+  --color-midnight-elevated: #141432;
+  --color-midnight-deep: #1e1e5a;
+  --color-indigo-accent: #4f46e5;
+  --color-indigo-glow: #818cf8;
+  --color-indigo-violet: #7c3aed;
+  --color-mint-accent: #34d399;
+  --color-amber-accent: #fbbf24;
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.129 0.042 264.695);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.129 0.042 264.695);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.129 0.042 264.695);
+  --primary: oklch(0.208 0.042 265.755);
+  --primary-foreground: oklch(0.984 0.003 247.858);
+  --secondary: oklch(0.968 0.007 247.896);
+  --secondary-foreground: oklch(0.208 0.042 265.755);
+  --muted: oklch(0.968 0.007 247.896);
+  --muted-foreground: oklch(0.554 0.046 257.417);
+  --accent: oklch(0.968 0.007 247.896);
+  --accent-foreground: oklch(0.208 0.042 265.755);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+  --border: oklch(0.929 0.013 255.508);
+  --input: oklch(0.929 0.013 255.508);
+  --ring: oklch(0.704 0.04 256.788);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.984 0.003 247.858);
+  --sidebar-foreground: oklch(0.129 0.042 264.695);
+  --sidebar-primary: oklch(0.208 0.042 265.755);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.968 0.007 247.896);
+  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
+  --sidebar-border: oklch(0.929 0.013 255.508);
+  --sidebar-ring: oklch(0.704 0.04 256.788);
+}
+
+.dark {
+  /* Midnight Indigo cinematic palette */
+  --background: oklch(0.09 0.03 270);
+  --foreground: oklch(0.97 0.01 260);
+  --card: oklch(0.15 0.04 270 / 0.6);
+  --card-foreground: oklch(0.97 0.01 260);
+  --popover: oklch(0.13 0.04 270);
+  --popover-foreground: oklch(0.97 0.01 260);
+  --primary: oklch(0.62 0.22 275);
+  --primary-foreground: oklch(0.98 0.005 260);
+  --secondary: oklch(0.22 0.04 270);
+  --secondary-foreground: oklch(0.97 0.01 260);
+  --muted: oklch(0.18 0.03 270);
+  --muted-foreground: oklch(0.7 0.03 265);
+  --accent: oklch(0.3 0.12 275);
+  --accent-foreground: oklch(0.98 0.005 260);
+  --destructive: oklch(0.65 0.22 25);
+  --destructive-foreground: oklch(0.98 0.005 260);
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 10%);
+  --ring: oklch(0.62 0.22 275 / 0.6);
+  --chart-1: oklch(0.62 0.22 275);
+  --chart-2: oklch(0.7 0.17 162);
+  --chart-3: oklch(0.75 0.19 70);
+  --chart-4: oklch(0.65 0.26 304);
+  --chart-5: oklch(0.65 0.25 16);
+  --sidebar: oklch(0.11 0.035 270 / 0.85);
+  --sidebar-foreground: oklch(0.95 0.01 260);
+  --sidebar-primary: oklch(0.62 0.22 275);
+  --sidebar-primary-foreground: oklch(0.98 0.005 260);
+  --sidebar-accent: oklch(0.2 0.05 275 / 0.6);
+  --sidebar-accent-foreground: oklch(0.98 0.005 260);
+  --sidebar-border: oklch(1 0 0 / 6%);
+  --sidebar-ring: oklch(0.62 0.22 275 / 0.5);
+  --gradient-cinema: radial-gradient(
+      ellipse 80% 60% at 20% 0%,
+      oklch(0.4 0.22 275 / 0.25) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 60% 50% at 100% 100%,
+      oklch(0.35 0.2 295 / 0.18) 0%,
+      transparent 60%
+    );
+  --gradient-indigo: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #ec4899 100%);
+  --gradient-card: linear-gradient(
+    180deg,
+    oklch(1 0 0 / 0.04) 0%,
+    oklch(1 0 0 / 0.01) 100%
+  );
+  --shadow-glow: 0 0 40px -10px oklch(0.62 0.22 275 / 0.5),
+    0 0 80px -20px oklch(0.62 0.22 275 / 0.3);
+  --shadow-elevated: 0 20px 60px -20px rgba(0, 0, 0, 0.6),
+    0 8px 20px -10px rgba(0, 0, 0, 0.4);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+}
+
+/* ============= Cinematic shell ============= */
+.cinema-shell {
+  position: relative;
+  isolation: isolate;
+  background-color: #05050f;
+  color: var(--color-foreground);
+  font-family: var(--font-body);
+}
+.cinema-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: var(--gradient-cinema);
+}
+.cinema-shell > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Glass surface used by sidebar/topbar/cards */
+@utility glass {
+  background: linear-gradient(
+    180deg,
+    oklch(1 0 0 / 0.05) 0%,
+    oklch(1 0 0 / 0.02) 100%
+  );
+  backdrop-filter: blur(10px);
+  border: 1px solid oklch(1 0 0 / 0.08);
+}
+
+@utility glow-indigo {
+  box-shadow: var(--shadow-glow);
+}
+
+@utility text-gradient-indigo {
+  background: linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #f0abfc 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+}
+
+/* Cinematic typography inside the shell */
+.cinema-shell h1.display,
+.cinema-shell h2.display {
+  font-family: var(--font-display);
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+/* Custom scrollbar */
+.cinema-shell ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.cinema-shell ::-webkit-scrollbar-track {
+  background: transparent;
+}
+.cinema-shell ::-webkit-scrollbar-thumb {
+  background: oklch(0.62 0.22 275 / 0.3);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.cinema-shell ::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.62 0.22 275 / 0.5);
+  background-clip: padding-box;
+}
+
+/* Page fade-in */
+@keyframes cinema-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.cinema-enter {
+  animation: cinema-enter 0.18s ease-out both;
+}
+
+/* Shimmer for skeletons */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.cinema-shimmer {
+  background: linear-gradient(
+    90deg,
+    oklch(1 0 0 / 0.04) 0%,
+    oklch(0.62 0.22 275 / 0.15) 50%,
+    oklch(1 0 0 / 0.04) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+/* ============= Cinema stagger entrance ============= */
+@keyframes cinema-stagger-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.cinema-stagger > * {
+  /* stagger desativado para velocidade; mantém o seletor para compatibilidade */
+  opacity: 1;
+}
+
+/* ============= Cinematic auto-upgrade for CRUD screens =============
+ * These rules target the existing shadcn primitives inside the
+ * authenticated shell so the 25 CRUD/detail screens inherit the
+ * Midnight Indigo look without per-file rewrites.
+ */
+.cinema-shell main table thead tr {
+  background: linear-gradient(180deg, rgba(15,15,40,0.95) 0%, rgba(10,10,26,0.9) 100%);
+}
+.cinema-shell main table thead th {
+  color: rgba(199, 210, 254, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 10px;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(129, 140, 248, 0.15);
+}
+.cinema-shell main table tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+.cinema-shell main table tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.012);
+}
+.cinema-shell main table tbody tr:hover {
+  background: linear-gradient(90deg, rgba(129, 140, 248, 0.08), rgba(192, 132, 252, 0.04));
+  box-shadow: inset 2px 0 0 0 rgba(129, 140, 248, 0.6);
+}
+.cinema-shell main table tbody td {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Card auto-upgrade: any shadcn bg-card surface gets glass treatment */
+.cinema-shell main .bg-card {
+  background: linear-gradient(180deg, rgba(20,20,45,0.55), rgba(12,12,30,0.45));
+  border-color: rgba(255, 255, 255, 0.06);
+}
+.cinema-shell main .bg-card:hover {
+  border-color: rgba(129, 140, 248, 0.18);
+}
+
+/* Inputs / selects / textareas inside the shell get glass look */
+.cinema-shell main input:not([type="checkbox"]):not([type="radio"]),
+.cinema-shell main textarea,
+.cinema-shell main [data-slot="select-trigger"],
+.cinema-shell main button[role="combobox"] {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  color: rgba(255, 255, 255, 0.92) !important;
+}
+.cinema-shell main input:focus,
+.cinema-shell main textarea:focus,
+.cinema-shell main [data-slot="select-trigger"]:focus,
+.cinema-shell main button[role="combobox"]:focus-visible {
+  border-color: rgba(129, 140, 248, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.15);
+}
+.cinema-shell main label {
+  color: rgba(199, 210, 254, 0.75);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+}
+
+/* Dialog content matches midnight surface */
+[data-slot="dialog-content"],
+[data-radix-popper-content-wrapper] [role="dialog"] {
+  background: linear-gradient(180deg, #0c0c20 0%, #07071a 100%) !important;
+  border-color: rgba(129, 140, 248, 0.15) !important;
+  color: rgba(255, 255, 255, 0.92) !important;
+}
+
+/* Toaster — sonner glass */
+[data-sonner-toaster] [data-sonner-toast] {
+  background: #0a0a1a !important;
+  border: 1px solid rgba(129, 140, 248, 0.25) !important;
+  color: rgba(255, 255, 255, 0.92) !important;
+  box-shadow: 0 20px 60px -20px rgba(0,0,0,0.6), 0 0 30px -10px rgba(124, 58, 237, 0.4);
+}
+[data-sonner-toaster] [data-sonner-toast][data-type="success"] {
+  border-color: rgba(52, 211, 153, 0.35) !important;
+}
+[data-sonner-toaster] [data-sonner-toast][data-type="error"] {
+  border-color: rgba(251, 113, 133, 0.45) !important;
+}
+
+/* Pill tabs utility */
+@utility tab-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.55);
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+.tab-pill:hover { color: rgba(255, 255, 255, 0.9); background: rgba(255,255,255,0.04); }
+.tab-pill[data-active="true"] {
+  color: #fff;
+  background: linear-gradient(135deg, rgba(79,70,229,0.25), rgba(124,58,237,0.25));
+  border-color: rgba(129, 140, 248, 0.4);
+  box-shadow: 0 0 24px -6px rgba(124, 58, 237, 0.6);
+}
+
+/* ============= Light shell (alternative theme) ============= */
+.light-shell {
+  position: relative;
+  isolation: isolate;
+  background-color: #f8fafc;
+  color: #0f172a;
+  font-family: var(--font-body);
+}
+.light-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 0%, rgba(79, 70, 229, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 100% 100%, rgba(124, 58, 237, 0.06) 0%, transparent 60%);
+}
+.light-shell > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Cinematic typography also in light */
+.light-shell h1.display,
+.light-shell h2.display {
+  font-family: var(--font-display);
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: #0f172a;
+}
+
+/* Scrollbar */
+.light-shell ::-webkit-scrollbar { width: 10px; height: 10px; }
+.light-shell ::-webkit-scrollbar-track { background: transparent; }
+.light-shell ::-webkit-scrollbar-thumb {
+  background: rgba(79, 70, 229, 0.25);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.light-shell ::-webkit-scrollbar-thumb:hover {
+  background: rgba(79, 70, 229, 0.45);
+  background-clip: padding-box;
+}
+
+/* Tables */
+.light-shell main table thead tr {
+  background: linear-gradient(180deg, #f1f5f9 0%, #ffffff 100%);
+}
+.light-shell main table thead th {
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 10px;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(79, 70, 229, 0.15);
+}
+.light-shell main table tbody tr {
+  border-bottom: 1px solid rgba(15, 23, 42, 0.05);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+.light-shell main table tbody tr:nth-child(even) {
+  background: rgba(15, 23, 42, 0.015);
+}
+.light-shell main table tbody tr:hover {
+  background: linear-gradient(90deg, rgba(79, 70, 229, 0.06), rgba(124, 58, 237, 0.03));
+  box-shadow: inset 2px 0 0 0 rgba(79, 70, 229, 0.5);
+}
+.light-shell main table tbody td { color: #0f172a; }
+
+/* Cards */
+.light-shell main .bg-card {
+  background: #ffffff;
+  border-color: rgba(15, 23, 42, 0.08);
+}
+.light-shell main .bg-card:hover {
+  border-color: rgba(79, 70, 229, 0.3);
+}
+
+/* Inputs */
+.light-shell main input:not([type="checkbox"]):not([type="radio"]),
+.light-shell main textarea,
+.light-shell main [data-slot="select-trigger"],
+.light-shell main button[role="combobox"] {
+  background: #ffffff !important;
+  border-color: rgba(15, 23, 42, 0.15) !important;
+  color: #0f172a !important;
+}
+.light-shell main input:focus,
+.light-shell main textarea:focus,
+.light-shell main [data-slot="select-trigger"]:focus,
+.light-shell main button[role="combobox"]:focus-visible {
+  border-color: rgba(79, 70, 229, 0.6) !important;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+}
+.light-shell main label {
+  color: #475569;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+}
+
+/* Sidebar in light mode */
+.light-shell [data-slot="sidebar-container"],
+.light-shell [data-sidebar="sidebar"] {
+  background: #ffffff !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
+  color: #0f172a !important;
+}
+.light-shell [data-sidebar="menu-button"] {
+  color: #475569;
+}
+.light-shell [data-sidebar="menu-button"]:hover {
+  background: rgba(79, 70, 229, 0.06);
+  color: #0f172a;
+}
+.light-shell [data-sidebar="menu-button"][data-active="true"] {
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.15), rgba(124, 58, 237, 0.10));
+  color: #4f46e5;
+}
+
+/* Page fade-in works in both */
+.light-shell .cinema-enter { animation: cinema-enter 0.18s ease-out both; }
+
+/* Shimmer for light */
+.light-shell .cinema-shimmer {
+  background: linear-gradient(90deg, rgba(15,23,42,0.04) 0%, rgba(79,70,229,0.15) 50%, rgba(15,23,42,0.04) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+/* ============= Light shell — global utility overrides =============
+ * The 25 CRUD/detail screens are full of hardcoded dark utilities
+ * (text-white, bg-white/[0.03], border-white/10, text-indigo-300...).
+ * Remap them inside the light shell so every page automatically
+ * adapts without per-file rewrites.
+ */
+
+/* Text — pure white becomes near-black */
+html.light .text-white { color: #0f172a !important; }
+html.light .text-white\/90 { color: rgba(15,23,42,0.92) !important; }
+html.light .text-white\/85 { color: rgba(15,23,42,0.88) !important; }
+html.light .text-white\/80 { color: rgba(15,23,42,0.82) !important; }
+html.light .text-white\/75 { color: rgba(15,23,42,0.78) !important; }
+html.light .text-white\/70 { color: rgba(15,23,42,0.74) !important; }
+html.light .text-white\/65 { color: #475569 !important; }
+html.light .text-white\/60 { color: #475569 !important; }
+html.light .text-white\/55 { color: #64748b !important; }
+html.light .text-white\/50 { color: #64748b !important; }
+html.light .text-white\/45 { color: #64748b !important; }
+html.light .text-white\/40 { color: #94a3b8 !important; }
+html.light .text-white\/35 { color: #94a3b8 !important; }
+html.light .text-white\/30 { color: #cbd5e1 !important; }
+html.light .text-white\/20 { color: #cbd5e1 !important; }
+html.light .text-white\/10 { color: #e2e8f0 !important; }
+
+/* Placeholder colors */
+html.light .placeholder\:text-white\/30::placeholder,
+html.light .placeholder\:text-white\/40::placeholder,
+html.light .placeholder\:text-white\/50::placeholder { color: #94a3b8 !important; }
+
+/* Indigo accents — darker indigo for AA contrast on white */
+html.light .text-indigo-200 { color: #4338ca !important; }
+html.light .text-indigo-300 { color: #4f46e5 !important; }
+html.light .text-indigo-300\/80,
+html.light .text-indigo-300\/70 { color: #4f46e5 !important; }
+html.light .text-indigo-400 { color: #4338ca !important; }
+html.light .text-indigo-400\/70 { color: rgba(67,56,202,0.8) !important; }
+
+/* Glass-style backgrounds — flat white/slate surfaces in light */
+html.light .bg-white\/\[0\.02\],
+html.light .bg-white\/\[0\.03\],
+html.light .bg-white\/5 { background-color: #ffffff !important; }
+html.light .bg-white\/\[0\.04\],
+html.light .bg-white\/\[0\.05\] { background-color: #f1f5f9 !important; }
+html.light .bg-white\/10 { background-color: #e2e8f0 !important; }
+html.light .bg-white\/20 { background-color: #cbd5e1 !important; }
+html.light .hover\:bg-white\/\[0\.03\]:hover,
+html.light .hover\:bg-white\/\[0\.04\]:hover,
+html.light .hover\:bg-white\/\[0\.05\]:hover,
+html.light .hover\:bg-white\/5:hover { background-color: #f8fafc !important; }
+html.light .hover\:bg-white\/10:hover { background-color: #f1f5f9 !important; }
+
+/* Borders */
+html.light .border-white\/5,
+html.light .border-white\/10,
+html.light .border-white\/20 { border-color: rgba(15,23,42,0.10) !important; }
+html.light .border-white\/30 { border-color: rgba(15,23,42,0.18) !important; }
+html.light .hover\:border-white\/20:hover { border-color: rgba(15,23,42,0.18) !important; }
+
+/* Divide utilities */
+html.light .divide-white\/5 > * + *,
+html.light .divide-white\/10 > * + * { border-color: rgba(15,23,42,0.08) !important; }
+
+/* Indigo glass backgrounds (used in chips/badges) — soften for white bg */
+html.light .bg-indigo-500\/10 { background-color: rgba(79,70,229,0.10) !important; }
+html.light .border-indigo-400\/30 { border-color: rgba(79,70,229,0.30) !important; }
+
+/* Text gradient (indigo→pink) — readable variant */
+html.light .text-gradient-indigo {
+  background: linear-gradient(135deg, #4338ca 0%, #7c3aed 50%, #be185d 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Cards & glass surfaces — soft elevation so they pop off the page */
+html.light main .bg-card,
+html.light main .glass {
+  box-shadow: 0 1px 3px rgba(15,23,42,0.05), 0 6px 16px -8px rgba(15,23,42,0.10);
+}
+html.light .glass {
+  background: #ffffff !important;
+  border-color: rgba(15,23,42,0.08) !important;
+  backdrop-filter: none;
+}
+
+/* Sidebar group labels & footer */
+html.light [data-sidebar="group-label"] { color: #94a3b8 !important; }
+html.light [data-sidebar="separator"] { background: rgba(15,23,42,0.08) !important; }
+
+/* Dialog content — light variant overrides the global dark dialog rule */
+html.light [data-slot="dialog-content"],
+html.light [data-radix-popper-content-wrapper] [role="dialog"] {
+  background: #ffffff !important;
+  border-color: rgba(15,23,42,0.10) !important;
+  color: #0f172a !important;
+  box-shadow: 0 30px 80px -20px rgba(15,23,42,0.25) !important;
+}
+html.light [data-slot="dialog-content"] [data-slot="dialog-title"],
+html.light [role="dialog"] [data-slot="dialog-title"] { color: #0f172a !important; }
+html.light [data-slot="dialog-content"] [data-slot="dialog-description"],
+html.light [role="dialog"] [data-slot="dialog-description"] { color: #475569 !important; }
+
+/* Inputs inside dialogs/popovers (rendered via portal, outside .light-shell main) */
+html.light [data-slot="dialog-content"] input:not([type="checkbox"]):not([type="radio"]),
+html.light [data-slot="dialog-content"] textarea,
+html.light [data-slot="dialog-content"] [data-slot="select-trigger"],
+html.light [data-slot="dialog-content"] button[role="combobox"],
+html.light [role="dialog"] input:not([type="checkbox"]):not([type="radio"]),
+html.light [role="dialog"] textarea,
+html.light [role="dialog"] [data-slot="select-trigger"],
+html.light [role="dialog"] button[role="combobox"] {
+  background: #ffffff !important;
+  border-color: rgba(15,23,42,0.15) !important;
+  color: #0f172a !important;
+}
+html.light [data-slot="dialog-content"] label,
+html.light [role="dialog"] label {
+  color: #475569 !important;
+}
+
+/* Popover/dropdown/command menus */
+html.light [data-slot="popover-content"],
+html.light [data-slot="dropdown-menu-content"],
+html.light [data-slot="command"] {
+  background: #ffffff !important;
+  border-color: rgba(15,23,42,0.10) !important;
+  color: #0f172a !important;
+  box-shadow: 0 10px 30px -10px rgba(15,23,42,0.18) !important;
+}
+
+/* Sonner toaster in light */
+html.light [data-sonner-toaster] [data-sonner-toast] {
+  background: #ffffff !important;
+  border: 1px solid rgba(79,70,229,0.25) !important;
+  color: #0f172a !important;
+  box-shadow: 0 20px 60px -20px rgba(15,23,42,0.18), 0 0 30px -10px rgba(79,70,229,0.18) !important;
+}
+html.light [data-sonner-toaster] [data-sonner-toast][data-type="success"] {
+  border-color: rgba(5,150,105,0.40) !important;
+}
+html.light [data-sonner-toaster] [data-sonner-toast][data-type="error"] {
+  border-color: rgba(225,29,72,0.45) !important;
+}
+
+/* Tab pill in light */
+html.light .tab-pill { color: #64748b; }
+html.light .tab-pill:hover { color: #0f172a; background: rgba(15,23,42,0.04); }
+html.light .tab-pill[data-active="true"] {
+  color: #ffffff;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  border-color: rgba(79,70,229,0.5);
+  box-shadow: 0 8px 24px -8px rgba(79,70,229,0.45);
+}
+
+/* Charts (Recharts) — improve grid/axis legibility when components
+ * still use the static `chartColors` exports. */
+html.light .recharts-cartesian-axis-tick text { fill: #64748b !important; }
+html.light .recharts-cartesian-grid line { stroke: rgba(15,23,42,0.08) !important; }
+
+/* Backdrops over the app should also be lighter in light theme */
+html.light .bg-black\/80 { background-color: rgba(15,23,42,0.55) !important; }
+html.light .bg-black\/60 { background-color: rgba(15,23,42,0.40) !important; }
+html.light .bg-black\/50 { background-color: rgba(15,23,42,0.35) !important; }
+
+/* ============================================================
+ * Accent chip overrides for light theme (indigo / emerald / amber / rose / violet)
+ * HelpHint, success cards, badges and stat cards use semi-transparent
+ * tints designed for the dark shell. In light theme they collapse
+ * into illegible washes. Remap them to readable mid-saturation tones.
+ * ============================================================ */
+
+/* Indigo */
+html.light .text-indigo-100,
+html.light .text-indigo-100\/85,
+html.light .text-indigo-100\/80,
+html.light .text-indigo-100\/70,
+html.light .text-indigo-200,
+html.light .text-indigo-200\/80 { color: #3730a3 !important; }
+html.light .text-indigo-300,
+html.light .text-indigo-400 { color: #4338ca !important; }
+html.light .bg-indigo-500\/\[0\.06\],
+html.light .bg-indigo-500\/\[0\.08\],
+html.light .bg-indigo-500\/10 { background-color: rgba(79,70,229,0.10) !important; }
+html.light .bg-indigo-500\/15,
+html.light .bg-indigo-500\/20 { background-color: rgba(79,70,229,0.14) !important; }
+html.light .border-indigo-400\/15,
+html.light .border-indigo-400\/20,
+html.light .border-indigo-400\/30,
+html.light .border-indigo-400\/40 { border-color: rgba(79,70,229,0.28) !important; }
+
+/* Emerald */
+html.light .text-emerald-100,
+html.light .text-emerald-100\/80,
+html.light .text-emerald-200,
+html.light .text-emerald-200\/80 { color: #047857 !important; }
+html.light .text-emerald-300,
+html.light .text-emerald-400 { color: #065f46 !important; }
+html.light .bg-emerald-500\/5,
+html.light .bg-emerald-500\/10,
+html.light .bg-emerald-500\/\[0\.06\],
+html.light .bg-emerald-500\/\[0\.08\] { background-color: rgba(5,150,105,0.10) !important; }
+html.light .bg-emerald-500\/15,
+html.light .bg-emerald-500\/20 { background-color: rgba(5,150,105,0.14) !important; }
+html.light .border-emerald-400\/20,
+html.light .border-emerald-400\/30,
+html.light .border-emerald-400\/40,
+html.light .border-emerald-400\/60 { border-color: rgba(5,150,105,0.32) !important; }
+
+/* Amber */
+html.light .text-amber-100,
+html.light .text-amber-100\/80,
+html.light .text-amber-200,
+html.light .text-amber-200\/80 { color: #b45309 !important; }
+html.light .text-amber-300,
+html.light .text-amber-400 { color: #92400e !important; }
+html.light .bg-amber-500\/5,
+html.light .bg-amber-500\/10,
+html.light .bg-amber-500\/\[0\.06\],
+html.light .bg-amber-500\/\[0\.08\] { background-color: rgba(217,119,6,0.10) !important; }
+html.light .bg-amber-500\/15,
+html.light .bg-amber-500\/20 { background-color: rgba(217,119,6,0.14) !important; }
+html.light .border-amber-400\/20,
+html.light .border-amber-400\/30,
+html.light .border-amber-400\/40,
+html.light .border-amber-400\/60 { border-color: rgba(217,119,6,0.32) !important; }
+
+/* Rose / pink */
+html.light .text-rose-100,
+html.light .text-rose-100\/80,
+html.light .text-rose-200,
+html.light .text-rose-200\/80 { color: #be123c !important; }
+html.light .text-rose-300,
+html.light .text-rose-400 { color: #9f1239 !important; }
+html.light .bg-rose-500\/5,
+html.light .bg-rose-500\/10 { background-color: rgba(225,29,72,0.10) !important; }
+html.light .bg-rose-500\/15,
+html.light .bg-rose-500\/20 { background-color: rgba(225,29,72,0.14) !important; }
+html.light .border-rose-400\/20,
+html.light .border-rose-400\/30,
+html.light .border-rose-400\/40,
+html.light .border-rose-400\/60 { border-color: rgba(225,29,72,0.32) !important; }
+
+/* Violet / purple */
+html.light .text-violet-100,
+html.light .text-violet-200,
+html.light .text-violet-200\/80 { color: #6d28d9 !important; }
+html.light .text-violet-300,
+html.light .text-violet-400,
+html.light .text-purple-300,
+html.light .text-purple-400 { color: #5b21b6 !important; }
+html.light .bg-violet-500\/10,
+html.light .bg-violet-500\/15,
+html.light .bg-purple-500\/10,
+html.light .bg-purple-500\/15 { background-color: rgba(124,58,237,0.12) !important; }
+html.light .border-violet-400\/20,
+html.light .border-violet-400\/30,
+html.light .border-purple-400\/20,
+html.light .border-purple-400\/30 { border-color: rgba(124,58,237,0.30) !important; }
+
+/* Slate (used as muted hints inside cards) */
+html.light .text-slate-300 { color: #475569 !important; }
+html.light .text-slate-400 { color: #64748b !important; }
+html.light .text-slate-200 { color: #334155 !important; }
