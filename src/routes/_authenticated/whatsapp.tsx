@@ -1,7 +1,7 @@
 import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { MessageSquare, FileText, Send, AlertTriangle, CheckCircle2, Megaphone, Webhook, Loader2, RefreshCw } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
@@ -11,6 +11,7 @@ import { WhatsAppBubble } from "@/components/whatsapp-bubble";
 import { CinemaError } from "@/components/cinema-error";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { DisparoLivreDialog } from "@/components/disparo-livre-dialog";
 import { useCurrentUser } from "@/lib/auth";
 import { syncZapiWebhooks, getZapiStatus, getRecentZapiEvents } from "@/lib/zapi.functions";
@@ -75,6 +76,7 @@ function Overview() {
   const { profile, isAdmin } = useCurrentUser();
   const politicoId = (profile as any)?.politico_id ?? "";
   const [openDisparo, setOpenDisparo] = useState(false);
+  const [openZapiConfig, setOpenZapiConfig] = useState(false);
 
   const statusFn = useServerFn(getZapiStatus);
   const syncFn = useServerFn(syncZapiWebhooks);
@@ -94,21 +96,9 @@ function Overview() {
 
   const syncMut = useMutation({
     mutationFn: () => syncFn({ data: { webhookUrl: expectedUrl } }),
-    onSuccess: () => { toast.success("Webhooks do Z-API atualizados"); zapiStatus.refetch(); recentEvents.refetch(); },
+    onSuccess: (r: any) => { if (!r?.result?.received?.ok || !r?.result?.delivery?.ok) toast.error("A Z-API não confirmou os webhooks. Confira as credenciais."); else toast.success("Webhooks da Z-API atualizados"); zapiStatus.refetch(); recentEvents.refetch(); },
     onError: (e: any) => toast.error(e?.message ?? "Falha ao configurar webhook"),
   });
-
-  // Auto-reconfigura uma única vez se o webhook não estiver apontando pra cá.
-  const autoSyncedRef = useRef(false);
-  useEffect(() => {
-    if (!isAdmin) return;
-    if (zapiStatus.isLoading || zapiStatus.isFetching) return;
-    if (!zapiStatus.data) return;
-    if (isPointingHere) return;
-    if (autoSyncedRef.current) return;
-    autoSyncedRef.current = true;
-    syncMut.mutate();
-  }, [isAdmin, zapiStatus.data, zapiStatus.isLoading, zapiStatus.isFetching, isPointingHere]);
 
   const recentEvents = useQuery({
     queryKey: ["zapi-recent-events"],
@@ -173,7 +163,7 @@ function Overview() {
               <Button variant="outline" size="sm" onClick={() => zapiStatus.refetch()} disabled={zapiStatus.isFetching}>
                 <RefreshCw className={`mr-1 h-4 w-4 ${zapiStatus.isFetching ? "animate-spin" : ""}`} /> Verificar
               </Button>
-              <Button size="sm" onClick={() => syncMut.mutate()} disabled={syncMut.isPending}>
+              <Button size="sm" onClick={() => setOpenZapiConfig(true)}>
                 {syncMut.isPending ? <Loader2 className="mr-1 h-4 w-4 animate-spin" /> : <Webhook className="mr-1 h-4 w-4" />}
                 Reconfigurar
               </Button>
@@ -228,6 +218,26 @@ function Overview() {
           )}
         </div>
       )}
+
+      <Dialog open={openZapiConfig} onOpenChange={setOpenZapiConfig}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Configurar Z-API</DialogTitle>
+            <DialogDescription>As credenciais devem ficar no ambiente seguro do servidor, nunca no GitHub ou neste formulário.</DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 text-sm">
+            <p>1. Configure no ambiente de hospedagem as variáveis <code>ZAPI_INSTANCE_ID</code>, <code>ZAPI_TOKEN</code> e, quando exigida, <code>ZAPI_CLIENT_TOKEN</code>. Reinicie ou publique novamente o servidor.</p>
+            <div><p className="font-semibold">2. URL de recebimento</p><p className="break-all rounded-lg border p-3 text-xs">{expectedUrl}</p></div>
+            <p className="text-muted-foreground">O botão Salvar webhook registra a URL na Z-API, mas não armazena credenciais.</p>
+            {(zapiStatus.data as any)?.error && <p role="alert" className="text-rose-300">{String((zapiStatus.data as any).error)}</p>}
+            <div className="flex flex-wrap justify-end gap-2">
+              <Button variant="outline" onClick={() => zapiStatus.refetch()} disabled={zapiStatus.isFetching}>{zapiStatus.isFetching ? "Verificando..." : "Testar conexão"}</Button>
+              <Button onClick={() => syncMut.mutate()} disabled={syncMut.isPending}>{syncMut.isPending ? "Configurando..." : "Salvar webhook"}</Button>
+            </div>
+            <p className="text-xs text-muted-foreground">Apenas administradores podem registrar o webhook. Confirme o recebimento de mensagens pelos eventos recentes.</p>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <div className="rounded-2xl border border-emerald-400/30 bg-emerald-500/[0.06] p-4">
         <div className="flex items-center justify-between gap-4">
